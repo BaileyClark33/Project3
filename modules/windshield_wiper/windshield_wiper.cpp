@@ -5,6 +5,9 @@
 #include "headlights.h"
 #include "ignition.h"
 #include "mbed.h"
+#include "display.h"
+#include "windshield_wiper.h"
+
 
 /*We now expand our automobile control system to further include
  the windshield wiper subsystem. The wipers on most modern vehicles
@@ -38,18 +41,17 @@ Intermittent mode is identical to low-speed mode with the
 #define HIGH_PERIOD 0.04
 #define LOW_PERIOD 0.02
 #define INT_PERIOD 0.02
-#define 
 
 //=====[Declaration of private data types]=====================================
 
 PwmOut servo(PF_9);
 
-typedef enum {
-  WIPERS_OFF,
-  WIPERS_INT,
-  WIPERS_HI,
-  WIPERS_LOW
-} windshield_state_t;
+// typedef enum {
+//   WIPERS_OFF,
+//   WIPERS_INT,
+//   WIPERS_HI,
+//   WIPERS_LOW
+// } windshield_state_t;
 
 //=====[Declaration and initialization of public global objects]===============
 
@@ -59,11 +61,12 @@ typedef enum {
 
 //=====[Declaration and initialization of private global variables]============
 
-windshield_state_t wiperState;
+// windshield_state_t wiperState;
 
 UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
 
 AnalogIn wiperSelect(A0);
+AnalogIn delaySelect(A1);
 
 int target;
 
@@ -71,11 +74,12 @@ int target;
 
 void windshieldRun();
 void selectorUpdate();
+void delaySelectorUpdate();
 void wipersHi();
 void wipersLow();
 void wipersInt();
 void wipersOff();
-void wipersRun( float period );
+// void wipersRun( float period );
 
 //=====[Implementations of public functions]===================================
 
@@ -88,6 +92,7 @@ void windshieldInit() {
 void windshieldUpdate() { // ingitionRun calls this
   selectorUpdate();
   windshieldRun();
+  delaySelectorUpdate();
 }
 
 void wipersReturn() {
@@ -115,29 +120,28 @@ void wipersReturn() {
 
 //=====[Implementations of private functions]==================================
 
-void windshieldRun() {
-  if (!ignitionRead()) {
-    wiperState = WIPERS_OFF;
-  }
-  switch (wiperState) {
+// void windshieldRun() {
+//   if (!ignitionRead()) {
+//     wiperState = WIPERS_OFF;
+//   }
+//   switch (wiperState) {
 
-  case WIPERS_HI:
-    wipersHi();
-    break;
-  case WIPERS_LOW:
-    wipersLow();
-    break;
-  case WIPERS_INT:
-    wipersInt();
-    break;
-  default:
-    case WIPERS_OFF:
-    wipersOff();
-    wiperState = WIPERS_OFF;
-    break;
+//   case WIPERS_HI:
+//     wipersHi();
+//     break;
+//   case WIPERS_LOW:
+//     wipersLow();
+//     break;
+//   case WIPERS_INT:
+//     wipersInt();
+//     break;
+//   default:
+//     case WIPERS_OFF:
+//     wipersOff();
+//     break;
     
-  }
-}
+//   }
+// }
 
 void selectorUpdate() {
   float num = wiperSelect.read();
@@ -152,19 +156,31 @@ void selectorUpdate() {
   }
 }
 
+void delaySelectorUpdate() {
+  float num = delaySelect.read();
+
+  if (num >= .06) {
+    delayState = 1000;
+  } else if (num > .03 && num <= .06) {
+    delayState = 500;
+  } else {
+    delayState = 250;
+  }
+}
+
 void wipersHi() {
     uartUsb.write("Wiper mode: Hi\n", 16);
-    //wipersRun( HIPERIOD );
+    // wipersRun( HIPERIOD );
 }
 
 void wipersLow() {
     uartUsb.write("Wiper mode: Intermittent\n", 28);
-    //wipersRun( LOWPERIOD );
+    // wipersRun( LOWPERIOD );
 }
 
 void wipersInt() {
     uartUsb.write("Wiper mode: Low\n", 17);
-    //wipersRun( INTPERIOD );
+    // wipersRun( INTPERIOD );
 }
 
 void wipersOff() { 

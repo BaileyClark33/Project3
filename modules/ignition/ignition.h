@@ -7,6 +7,15 @@
 
 //=====[Declaration of public data types]======================================
 
+typedef enum {
+    INTRO,
+    FAIL,
+    START,
+    STOP
+} ignition_statement_t;
+
+ignition_statement_t writeVal;
+
 //=====[Declarations (prototypes) of public functions]=========================
 
 void ignitionInit();

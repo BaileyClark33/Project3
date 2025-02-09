@@ -34,6 +34,7 @@ static bool welcomed = false;
 
 static int updateTime_ms = 10;
 
+
 //=====[Declarations (prototypes) of private functions]========================
 
 void welcomeMessage();
@@ -58,7 +59,8 @@ void ignitionInit() {
 void ignitionUpdate() {
     static int accumulatedDebounceTime = 0;
     if (!welcomed && driveSeatUsed == ON) {
-        welcomeMessage();
+        // welcomeMessage();
+        writeVal = INTRO;
         welcomed = true;
     }
 
@@ -105,20 +107,24 @@ void checkCanIgnite() {
 void engineStart() {
     engineLed = ON;
     ignitionLed = OFF;
-    engineStartMessage();
+    // engineStartMessage();
+    writeVal = START;
 }
 
 void engineStop() {
     engineLed = OFF;
-    engineStopMessage();
+    // engineStopMessage();
+    writeVal = STOP;
 }
 
 void ignitionFail() {
     alarmEnable();
-    failMessage();
+    // failMessage();
+    writeVal = FAIL;
 }
 
 void welcomeMessage() {
+
     uartUsb.write("Welcome to enhanced alarm system model 218-W24\n", 47);
 }
 
