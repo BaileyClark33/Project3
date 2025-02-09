@@ -39,6 +39,7 @@ void carSystemUpdate()
     ignitionUpdate();
     headlightsUpdate();
     windshieldUpdate();
+    delay(SYSTEM_TIME_INCREMENT_MS);
 }
 
 //=====[Implementations of private functions]==================================

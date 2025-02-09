@@ -5,6 +5,8 @@
 #include "headlights.h"
 #include "ignition.h"
 #include "mbed.h"
+#include "display.h"
+
 
 /*We now expand our automobile control system to further include
  the windshield wiper subsystem. The wipers on most modern vehicles
