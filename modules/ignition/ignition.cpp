@@ -34,6 +34,7 @@ static bool welcomed = false;
 
 static int updateTime_ms = 10;
 
+ignition_statement_t writeVal;
 
 //=====[Declarations (prototypes) of private functions]========================
 
@@ -151,4 +152,8 @@ void failMessage() {
     if (passBelt == OFF) {
         uartUsb.write("Passenger seatbelt not fastened\n", 31);
     }
+}
+
+ignition_statement_t getIgnitionState() {
+    return writeVal;
 }
