@@ -27,11 +27,17 @@
 
 //=====[Declaration and initialization of private global variables]============
 
+DigitalIn driveSeatUsed(D0);
+DigitalIn driveBelt(D1);
+DigitalIn passSeatUsed(D2);
+DigitalIn passBelt(D3);
+
 //=====[Declarations (prototypes) of private functions]========================
 
 static void userInterfaceDisplayInit();
 static void userInterfaceDisplayUpdate();
 void statementSelect(ignition_statement_t cmd);
+void easyWrite(const char * str, int x = 0, int y = 0);
 
 //=====[Implementations of public functions]===================================
 
@@ -50,48 +56,17 @@ void userInterfaceUpdate()
 static void userInterfaceDisplayInit()
 {
     displayInit();
-     
-    // displayCharPositionWrite ( 0,0 );
-    // displayStringWrite( "Tmp:" );
-
-    // displayCharPositionWrite ( 9,0 );
-    // displayStringWrite( "Gas:" );
-    
-    // displayCharPositionWrite ( 0,1 );
-    // displayStringWrite( "Alarm:" );
 }
 
 static void userInterfaceDisplayUpdate()
 {
     static int accumulatedDisplayTime = 0;
-    // char temperatureString[3] = "";
     
     if( accumulatedDisplayTime >=
         DISPLAY_REFRESH_TIME_MS ) {
 
         accumulatedDisplayTime = 0;
         statementSelect(writeVal);
-        // sprintf(temperatureString, "%.0f", temperatureSensorReadCelsius());
-        // displayCharPositionWrite ( 4,0 );
-        // displayStringWrite( temperatureString );
-        // displayCharPositionWrite ( 6,0);
-        // displayStringWrite( "'C" );
-
-        // displayCharPositionWrite ( 13,0 );
-
-        // if ( gasDetectorStateRead() ) {
-        //     displayStringWrite( "D    " );
-        // } else {
-        //     displayStringWrite( "ND" );
-        // }
-
-        // displayCharPositionWrite ( 6,1 );
-        
-        // if ( sirenStateRead() ) {
-        //     displayStringWrite( "ON " );
-        // } else {
-        //     displayStringWrite( "OFF" );
-        // }
 
     } else {
         accumulatedDisplayTime =
@@ -100,32 +75,67 @@ static void userInterfaceDisplayUpdate()
 }
 
 void statementSelect(ignition_statement_t cmd) {
+    easyWrite("                   ", 0, 0);
+    easyWrite("                   ", 1, 0);
     switch(cmd) {
         case INTRO:
-            displayInit();
-            displayCharPositionWrite ( 0,0 );
-            displayStringWrite("Welcome to enhanced alarm system model 218-W24");
-            delay(1000);
+            easyWrite("Welcome to enhanced alarm");
+            easyWrite("system model 218-W24", 0, 1);
             break;
         case FAIL:
-            displayInit();
-            displayCharPositionWrite ( 0,0 );
-            displayStringWrite("Ignition inhibited");
-            delay(1000);
+            easyWrite("Ignition inhibited");
+            easyWrite("Errors", 0, 1);
+            if (driveSeatUsed == OFF) {
+                easyWrite("DS", 7, 1);
+            }
+            if (passSeatUsed == OFF) {
+                easyWrite("PS", 10, 1);
+            }
+            if (driveBelt == OFF) {
+                easyWrite("DSB", 13, 1);
+            }
+            if (passBelt == OFF) {
+                easyWrite("PSB", 16, 1);
+            }
             break;
         case START:
-            displayInit();
-            displayCharPositionWrite ( 0,0 );
-            displayStringWrite("Engine Started");
-            delay(1000);
-            break;
+            easyWrite("Engine Started");
+            easyWrite("Wiper:", 0, 1);
+            switch (wiperState) {
+                case WIPERS_HI:
+                    easyWrite("HI", 7, 1);
+                    break;
+                case WIPERS_LOW:
+                    easyWrite("LOW", 7, 1);
+                    break;
+                case WIPERS_INT:
+                    easyWrite("INT", 7, 1);
+                    easyWrite("Delay:", 11, 1);
+                    if (delayState == 1000) {
+                        easyWrite("L", 18, 1);
+                    }
+                    else if (delayState == 500) {
+                        easyWrite("M", 18, 1);
+                    }
+                    else {
+                        easyWrite("S", 18, 1);
+                    }
+                    break;
+                default:
+                case WIPERS_OFF:
+                    easyWrite("OFF", 7, 1);
+                    break;
+  }
         case STOP:
-            displayInit();
-            displayCharPositionWrite ( 0,0 );
-            displayStringWrite("Engine Stopped");
-            delay(1000);
+            easyWrite("Engine Stopped");
             break;
         default:
         break;
     }
+}
+
+void easyWrite(const char * str, int x, int y) {
+    displayCharPositionWrite (x, y);
+    displayStringWrite(str);
+    // delay(delay);
 }
