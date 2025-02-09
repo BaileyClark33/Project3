@@ -1,7 +1,10 @@
 //=====[#include guards - begin]===============================================
 
-#ifndef _HEADLIGHT_H_
-#define _HEADLIGHT_H_
+#include "mbed.h"
+#include "arm_book_lib.h"
+
+#ifndef _DISPLAY_H_
+#define _DISPLAY_H_
 
 //=====[Declaration of public defines]=========================================
 
@@ -9,9 +12,12 @@
 
 //=====[Declarations (prototypes) of public functions]=========================
 
-void headlightsInit();
-void headlightsUpdate();
+void displayInit( void );
+ 
+void displayCharPositionWrite( uint8_t charPositionX, uint8_t charPositionY );
+
+void displayStringWrite( const char * str );
 
 //=====[#include guards - end]=================================================
 
-#endif // _HEADLIGHT_H_
+#endif // _DISPLAY_H_

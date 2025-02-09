@@ -15,4 +15,4 @@ bool readLightSensor();
 
 //=====[#include guards - end]=================================================
 
-#endif // _LIGHT_SENSOR_H_
+#endif // _DAYLIGHT_SENSOR_H_

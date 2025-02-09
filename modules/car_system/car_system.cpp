@@ -6,6 +6,8 @@
 #include "ignition.h"
 #include "headlights.h"
 #include "windshield_wiper.h"
+#include "display.h"
+#include "user_interface.h"
 
 //=====[Declaration of private defines]========================================
 
@@ -25,6 +27,7 @@
 
 void carSystemInit()
 {
+    userInterfaceInit();
     ignitionInit();
     headlightsInit();
     windshieldInit();
@@ -32,6 +35,7 @@ void carSystemInit()
 
 void carSystemUpdate()
 {
+    userInterfaceUpdate();
     ignitionUpdate();
     headlightsUpdate();
     windshieldUpdate();

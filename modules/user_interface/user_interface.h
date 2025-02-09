@@ -1,7 +1,7 @@
 //=====[#include guards - begin]===============================================
 
-#ifndef _HEADLIGHT_H_
-#define _HEADLIGHT_H_
+#ifndef _USER_INTERFACE_H_
+#define _USER_INTERFACE_H_
 
 //=====[Declaration of public defines]=========================================
 
@@ -9,9 +9,9 @@
 
 //=====[Declarations (prototypes) of public functions]=========================
 
-void headlightsInit();
-void headlightsUpdate();
+void userInterfaceInit();
+void userInterfaceUpdate();
 
 //=====[#include guards - end]=================================================
 
-#endif // _HEADLIGHT_H_
+#endif // _USER_INTERFACE_H_
