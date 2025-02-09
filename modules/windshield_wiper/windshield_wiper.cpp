@@ -69,6 +69,7 @@ AnalogIn wiperSelect(A0);
 AnalogIn delaySelect(A1);
 
 int target;
+windshield_state_t wiperState;
 
 //=====[Declarations (prototypes) of private functions]========================
 
@@ -202,6 +203,10 @@ void wipersRun( float period ) {
             target = 0;
         }
     }
+}
+
+windshield_state_t getWiperState() {
+    return wiperState;
 }
 
 //=====[Main function, the program entry point after power on or reset]========
