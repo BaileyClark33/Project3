@@ -11,6 +11,7 @@
 
 void winshieldInit();
 void windshieldUpdate();
+void wipersReturn();
 
 //=====[#include guards - end]=================================================
 
