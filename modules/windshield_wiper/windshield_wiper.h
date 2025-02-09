@@ -14,14 +14,13 @@ typedef enum {
   WIPERS_LOW
 } windshield_state_t;
 
-windshield_state_t wiperState;
-
 int delayState;
 //=====[Declarations (prototypes) of public functions]=========================
 
 void windshieldInit();
 void windshieldUpdate();
 void wipersReturn();
+windshield_state_t getWiperState();
 
 //=====[#include guards - end]=================================================
 
