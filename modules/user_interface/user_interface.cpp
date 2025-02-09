@@ -97,13 +97,3 @@ static void userInterfaceDisplayUpdate()
             accumulatedDisplayTime + SYSTEM_TIME_INCREMENT_MS;        
     } 
 }
-
-static void incorrectCodeIndicatorUpdate()
-{
-    incorrectCodeLed = incorrectCodeStateRead();
-}
-
-static void systemBlockedIndicatorUpdate()
-{
-    systemBlockedLed = systemBlockedState;
-}
