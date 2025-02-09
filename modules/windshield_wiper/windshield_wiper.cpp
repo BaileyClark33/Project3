@@ -47,7 +47,7 @@ typedef enum {
   WIPERS_INT,
   WIPERS_HI,
   WIPERS_LOW
-} windshield_state_t_;
+} windshield_state_t;
 
 //=====[Declaration and initialization of public global objects]===============
 
@@ -57,7 +57,7 @@ typedef enum {
 
 //=====[Declaration and initialization of private global variables]============
 
-windshield_state_t_ wiperState;
+windshield_state_t wiperState;
 
 UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
 
