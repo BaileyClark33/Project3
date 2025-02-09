@@ -31,12 +31,14 @@ Intermittent mode is identical to low-speed mode with the
 
 //=====[Declaration of private defines]========================================
 
-#define DUTY_MIN 0.025 // Duty cycle is pulse_width/period
-#define DUTY_MAX 0.125
+#define DUTY_MIN 0.065 // Duty cycle is pulse_width/period
+#define DUTY_MAX 0.85
+#define DUTY_STOP 0.065
 #define PERIOD 0.02 // Units of period is seconds
-#define HIPERIOD 0.04
-#define LOWPERIOD 0.02
-#define INTPERIOD 0.02
+#define HIGH_PERIOD 0.04
+#define LOW_PERIOD 0.02
+#define INT_PERIOD 0.02
+#define 
 
 //=====[Declaration of private data types]=====================================
 
@@ -79,7 +81,7 @@ void wipersRun( float period );
 
 void windshieldInit() {
   servo.period(PERIOD);
-  servo.write(0.025); // start at 0
+  servo.write(DUTY_MIN); // start at 0
   target = 0;
 }
 
@@ -107,7 +109,6 @@ void wipersReturn() {
       wiperState = WIPERS_OFF;
     }
   } else {
-    servo.period(PERIOD);
     servo.write(0.025);
   }
 }
@@ -119,9 +120,7 @@ void windshieldRun() {
     wiperState = WIPERS_OFF;
   }
   switch (wiperState) {
-  case WIPERS_OFF:
-    wipersOff();
-    break;
+
   case WIPERS_HI:
     wipersHi();
     break;
@@ -132,7 +131,11 @@ void windshieldRun() {
     wipersInt();
     break;
   default:
+    case WIPERS_OFF:
+    wipersOff();
     wiperState = WIPERS_OFF;
+    break;
+    
   }
 }
 
