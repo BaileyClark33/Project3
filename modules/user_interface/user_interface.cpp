@@ -66,7 +66,7 @@ static void userInterfaceDisplayUpdate()
         DISPLAY_REFRESH_TIME_MS ) {
 
         accumulatedDisplayTime = 0;
-        statementSelect(writeVal);
+        statementSelect(getIgnitionState());
 
     } else {
         accumulatedDisplayTime =
@@ -101,7 +101,7 @@ void statementSelect(ignition_statement_t cmd) {
         case START:
             easyWrite("Engine Started");
             easyWrite("Wiper:", 0, 1);
-            switch (wiperState) {
+            switch (getWiperState()) {
                 case WIPERS_HI:
                     easyWrite("HI", 7, 1);
                     break;
