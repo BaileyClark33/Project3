@@ -38,13 +38,12 @@ Intermittent mode is identical to low-speed mode with the
 #define DUTY_MAX 0.85
 #define DUTY_STOP 0.065
 #define PERIOD 0.02 // Units of period is seconds
-#define HIGH_PERIOD 0.04
-#define LOW_PERIOD 0.02
-#define INT_PERIOD 0.02
+#define HIGH_SPEED 0.05
+#define LOW_SPEED 0.03
+#define INT_SPEED 0.03
+#define STOP 0.075
 
 //=====[Declaration of private data types]=====================================
-
-PwmOut servo(PF_9);
 
 //=====[Declaration and initialization of public global objects]===============
 
@@ -77,9 +76,7 @@ void wipersOff();
 //=====[Implementations of public functions]===================================
 
 void windshieldInit() {
-  servo.period(PERIOD);
-  servo.write(DUTY_MIN); // start at 0
-  target = 0;
+  servoInit();
 }
 
 void windshieldUpdate() { // ingitionRun calls this
@@ -89,7 +86,7 @@ void windshieldUpdate() { // ingitionRun calls this
 }
 
 void wipersReturn() {
-  if (servo.read() > 2) {
+  if (servoGetPosition()) {
     switch (wiperState) {
     case WIPERS_OFF:
       wipersOff();
@@ -107,7 +104,7 @@ void wipersReturn() {
       wiperState = WIPERS_OFF;
     }
   } else {
-    servo.write(0.025);
+    servo.write(STOP);
   }
 }
 
@@ -151,7 +148,6 @@ void selectorUpdate() {
 
 void delaySelectorUpdate() {
   float num = delaySelect.read();
-
   if (num >= .06) {
     delayState = 1000;
   } else if (num > .03 && num <= .06) {
@@ -162,39 +158,36 @@ void delaySelectorUpdate() {
 }
 
 void wipersHi() {
-    // uartUsb.write("Wiper mode: Hi\n", 16);
-    // wipersRun( HIPERIOD );
+    wipersRun( HIGH_SPEED );
 }
 
 void wipersLow() {
-    // uartUsb.write("Wiper mode: Intermittent\n", 28);
-    // wipersRun( LOWPERIOD );
+    wipersRun( LOW_SPEED );
 }
 
 void wipersInt() {
-    // uartUsb.write("Wiper mode: Low\n", 17);
-    // wipersRun( INTPERIOD );
+    wipersRun( INT_SPEED );
 }
 
 void wipersOff() { 
-    // uartUsb.write("Wiper mode: Intermittent\n", 28);
     wipersReturn(); 
 }
 
-void wipersRun( float period ) {
+void wipersRun( float speed ) {
     if (target == 0) {
-        servo.period(period);
-        servo.write(0.5 / period);
-        if (servo.read() < 2) {
+        
+        if (servoGetPosition() < 2) {
             target = 180;
         }
     } else if (target == 180) {
-        servo.period(period);
-        servo.write(2.5 / period);
-        if (servo.read() > 178) {
+        
+        if (servoGetPosition() > 178) {
             target = 0;
         }
     }
+
+    delay(delayState);
+ 
 }
 
 windshield_state_t getWiperState() {
