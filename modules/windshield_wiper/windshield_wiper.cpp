@@ -7,7 +7,7 @@
 #include "mbed.h"
 #include "display.h"
 #include "windshield_wiper.h"
-
+#include "servo.h"
 
 /*We now expand our automobile control system to further include
  the windshield wiper subsystem. The wipers on most modern vehicles
@@ -104,10 +104,10 @@ void wipersReturn() {
       wipersInt();
       break;
     default:
-      wiperState = WIPERS_OFF;
+      break;
     }
   } else {
-    servo.write(0.025);
+    wipersOff();
   }
 }
 
@@ -115,7 +115,7 @@ void wipersReturn() {
 
 void windshieldRun() {
   if (!ignitionRead()) {
-    wiperState = WIPERS_OFF;
+    wipersOff();
   }
   switch (wiperState) {
 
@@ -162,39 +162,34 @@ void delaySelectorUpdate() {
 }
 
 void wipersHi() {
-    // uartUsb.write("Wiper mode: Hi\n", 16);
-    // wipersRun( HIPERIOD );
+    servoUpdate(SERVO_LEFT_F);
+    delay(200);
+    servoUpdate(SERVO_RIGHT_F);
+    delay(200);
+    servoUpdate(SERVO_STOP);
+    delay(1000);
 }
 
 void wipersLow() {
-    // uartUsb.write("Wiper mode: Intermittent\n", 28);
-    // wipersRun( LOWPERIOD );
+    servoUpdate(SERVO_LEFT_S);
+    delay(500);
+    servoUpdate(SERVO_RIGHT_S);
+    delay(500);
+    servoUpdate(SERVO_STOP);
+    delay(1000);
 }
 
 void wipersInt() {
-    // uartUsb.write("Wiper mode: Low\n", 17);
-    // wipersRun( INTPERIOD );
+    delaySelectorUpdate();
+    servoUpdate(SERVO_LEFT_F);
+    delay(delayState);
+    servoUpdate(SERVO_RIGHT_F);
 }
 
 void wipersOff() { 
-    // uartUsb.write("Wiper mode: Intermittent\n", 28);
-    wipersReturn(); 
-}
-
-void wipersRun( float period ) {
-    if (target == 0) {
-        servo.period(period);
-        servo.write(0.5 / period);
-        if (servo.read() < 2) {
-            target = 180;
-        }
-    } else if (target == 180) {
-        servo.period(period);
-        servo.write(2.5 / period);
-        if (servo.read() > 178) {
-            target = 0;
-        }
-    }
+    servoUpdate(SERVO_RIGHT_F);
+    delay(200);
+    servoUpdate(SERVO_STOP);
 }
 
 windshield_state_t getWiperState() {

@@ -40,7 +40,6 @@ void carSystemUpdate()
     ignitionUpdate();
     headlightsUpdate();
     windshieldUpdate();
-    servoUpdate();
     userInterfaceUpdate();
     delay(SYSTEM_TIME_INCREMENT_MS);
 }
