@@ -26,20 +26,19 @@ PwmOut servo(PF_9);
 
 //=====[Declaration and initialization of private global variables]============
 
-servo_state_t servoState;
-
 //=====[Declarations (prototypes) of private functions]========================
 
 //=====[Implementations of public functions]===================================
 
 void servoInit() {
   servo.period(PERIOD);
-  servoState = SERVO_STOP;
-  servoUpdate();
+  servoUpdate(SERVO_RIGHT_F);
+  delay(200);
+  servoUpdate(SERVO_STOP);
 }
 
-void servoUpdate() {
-  switch (servoState) {
+void servoUpdate(servo_state_t state) {
+  switch (state) {
   case SERVO_STOP:
     servo.write(DUTY_STOP);
     break;
@@ -61,7 +60,7 @@ void servoUpdate() {
   }
 }
 
-void setServoState(servo_state_t state) { servoState = state; }
+// void setServoState(servo_state_t state) { servoState = state; }
 
 //=====[Implementations of private functions]==================================
 

@@ -18,8 +18,7 @@ typedef enum {
 //=====[Declarations (prototypes) of public functions]=========================
 
 void servoInit();
-void servoUpdate();
-void getServoState(servo_state_t);
+void servoUpdate(servo_state_t state);
 
 //=====[#include guards - end]=================================================
 

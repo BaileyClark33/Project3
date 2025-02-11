@@ -1,13 +1,11 @@
 //=====[Libraries]=============================================================
 
 #include "arm_book_lib.h"
-#include "daylight_sensor.h"
-#include "headlights.h"
 #include "ignition.h"
 #include "mbed.h"
 #include "display.h"
 #include "windshield_wiper.h"
-
+#include "servo.h"
 
 /*We now expand our automobile control system to further include
  the windshield wiper subsystem. The wipers on most modern vehicles
@@ -71,7 +69,7 @@ void wipersHi();
 void wipersLow();
 void wipersInt();
 void wipersOff();
-// void wipersRun( float period );
+
 
 //=====[Implementations of public functions]===================================
 
@@ -81,38 +79,15 @@ void windshieldInit() {
 
 void windshieldUpdate() { // ingitionRun calls this
   selectorUpdate();
-  windshieldRun();
   delaySelectorUpdate();
-}
-
-void wipersReturn() {
-  if (servoGetPosition()) {
-    switch (wiperState) {
-    case WIPERS_OFF:
-      wipersOff();
-      break;
-    case WIPERS_HI:
-      wipersHi();
-      break;
-    case WIPERS_LOW:
-      wipersLow();
-      break;
-    case WIPERS_INT:
-      wipersInt();
-      break;
-    default:
-      wiperState = WIPERS_OFF;
-    }
-  } else {
-    servo.write(STOP);
-  }
+  windshieldRun();
 }
 
 //=====[Implementations of private functions]==================================
 
 void windshieldRun() {
   if (!ignitionRead()) {
-    wiperState = WIPERS_OFF;
+    wipersOff();
   }
   switch (wiperState) {
 
@@ -158,37 +133,41 @@ void delaySelectorUpdate() {
 }
 
 void wipersHi() {
-    wipersRun( HIGH_SPEED );
+    servoUpdate(SERVO_LEFT_F);
+    delay(200);
+    servoUpdate(SERVO_RIGHT_F);
+    delay(200);
+    servoUpdate(SERVO_STOP);
+    delay(1000);
 }
 
 void wipersLow() {
-    wipersRun( LOW_SPEED );
+    servoUpdate(SERVO_LEFT_S);
+    delay(500);
+    servoUpdate(SERVO_RIGHT_S);
+    delay(500);
+    servoUpdate(SERVO_STOP);
+    delay(1000);
 }
 
 void wipersInt() {
-    wipersRun( INT_SPEED );
+    delaySelectorUpdate();
+    servoUpdate(SERVO_LEFT_F);
+    delay(200);
+    servoUpdate(SERVO_RIGHT_F);
+    delay(200)
+    servoUpdate(SERVO_STOP);
+    delay(delayState);
+  
 }
 
 void wipersOff() { 
-    wipersReturn(); 
+    servoUpdate(SERVO_RIGHT_F);
+    delay(200);
+    servoUpdate(SERVO_STOP);
 }
 
-void wipersRun( float speed ) {
-    if (target == 0) {
-        
-        if (servoGetPosition() < 2) {
-            target = 180;
-        }
-    } else if (target == 180) {
-        
-        if (servoGetPosition() > 178) {
-            target = 0;
-        }
-    }
 
-    delay(delayState);
- 
-}
 
 windshield_state_t getWiperState() {
     return wiperState;

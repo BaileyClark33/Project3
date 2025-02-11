@@ -4,7 +4,6 @@
 #include "mbed.h"
 #include "car_system.h"
 #include "ignition.h"
-#include "headlights.h"
 #include "windshield_wiper.h"
 #include "display.h"
 #include "user_interface.h"
@@ -30,7 +29,6 @@ void carSystemInit()
 {
     userInterfaceInit();
     ignitionInit();
-    headlightsInit();
     windshieldInit();
     servoInit();
 }
@@ -38,9 +36,7 @@ void carSystemInit()
 void carSystemUpdate()
 {
     ignitionUpdate();
-    headlightsUpdate();
     windshieldUpdate();
-    servoUpdate();
     userInterfaceUpdate();
     delay(SYSTEM_TIME_INCREMENT_MS);
 }
