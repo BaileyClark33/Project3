@@ -53,7 +53,6 @@ UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
 AnalogIn wiperSelect(A0);
 AnalogIn delaySelect(A1);
 
-int target;
 int delayState;
 windshield_state_t wiperState;
 
