@@ -70,7 +70,7 @@ void wipersHi();
 void wipersLow();
 void wipersInt();
 void wipersOff();
-// void wipersRun( float period );
+
 
 //=====[Implementations of public functions]===================================
 
@@ -82,8 +82,8 @@ void windshieldInit() {
 
 void windshieldUpdate() { // ingitionRun calls this
   selectorUpdate();
-  windshieldRun();
   delaySelectorUpdate();
+  windshieldRun();
 }
 
 void wipersReturn() {
