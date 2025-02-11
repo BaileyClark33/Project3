@@ -8,6 +8,7 @@
 #include "windshield_wiper.h"
 #include "display.h"
 #include "user_interface.h"
+#include "servo.h"
 
 //=====[Declaration of private defines]========================================
 
@@ -31,14 +32,16 @@ void carSystemInit()
     ignitionInit();
     headlightsInit();
     windshieldInit();
+    servoInit();
 }
 
 void carSystemUpdate()
 {
-    userInterfaceUpdate();
     ignitionUpdate();
     headlightsUpdate();
     windshieldUpdate();
+    servoUpdate();
+    userInterfaceUpdate();
     delay(SYSTEM_TIME_INCREMENT_MS);
 }
 

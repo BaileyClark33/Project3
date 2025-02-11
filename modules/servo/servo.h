@@ -1,27 +1,26 @@
 //=====[#include guards - begin]===============================================
 
-#ifndef _WINDSHIELD_H_
-#define _WINDSHIELD_H_
+#ifndef _SERVO_H_
+#define _SERVO_H_
 
 //=====[Declaration of public defines]=========================================
 
 //=====[Declaration of public data types]======================================
 
 typedef enum {
-  WIPERS_OFF,
-  WIPERS_INT,
-  WIPERS_HI,
-  WIPERS_LOW
-} windshield_state_t;
+  SERVO_LEFT_F,
+  SERVO_LEFT_S,
+  SERVO_RIGHT_F,
+  SERVO_RIGHT_S,
+  SERVO_STOP
+} servo_state_t;
 
 //=====[Declarations (prototypes) of public functions]=========================
 
-void windshieldInit();
-void windshieldUpdate();
-void wipersReturn();
-windshield_state_t getWiperState();
-int getDelayState();
+void servoInit();
+void servoUpdate();
+void getServoState(servo_state_t);
 
 //=====[#include guards - end]=================================================
 
-#endif // _WINDSHIELD_H_
+#endif // _SERVO_H_
