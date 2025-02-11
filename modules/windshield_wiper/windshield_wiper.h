@@ -18,7 +18,6 @@ typedef enum {
 
 void windshieldInit();
 void windshieldUpdate();
-void wipersReturn();
 windshield_state_t getWiperState();
 int getDelayState();
 

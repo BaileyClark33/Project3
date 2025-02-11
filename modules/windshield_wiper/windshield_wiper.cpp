@@ -86,29 +86,6 @@ void windshieldUpdate() { // ingitionRun calls this
   windshieldRun();
 }
 
-void wipersReturn() {
-  if (servo.read() > 2) {
-    switch (wiperState) {
-    case WIPERS_OFF:
-      wipersOff();
-      break;
-    case WIPERS_HI:
-      wipersHi();
-      break;
-    case WIPERS_LOW:
-      wipersLow();
-      break;
-    case WIPERS_INT:
-      wipersInt();
-      break;
-    default:
-      break;
-    }
-  } else {
-    wipersOff();
-  }
-}
-
 //=====[Implementations of private functions]==================================
 
 void windshieldRun() {
