@@ -7,7 +7,6 @@
 
 #include "car_system.h"
 #include "alarm.h"
-#include "daylight_sensor.h"
 #include "headlights.h"
 #include "ignition.h"
 #include "windshield_wiper.h"
