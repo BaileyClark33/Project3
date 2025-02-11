@@ -36,9 +36,6 @@ Intermittent mode is identical to low-speed mode with the
 #define DUTY_MAX 0.85
 #define DUTY_STOP 0.065
 #define PERIOD 0.02 // Units of period is seconds
-#define HIGH_SPEED 0.05
-#define LOW_SPEED 0.03
-#define INT_SPEED 0.03
 #define STOP 0.075
 
 //=====[Declaration of private data types]=====================================
