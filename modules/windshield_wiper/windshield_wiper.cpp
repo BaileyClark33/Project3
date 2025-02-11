@@ -46,13 +46,6 @@ Intermittent mode is identical to low-speed mode with the
 
 PwmOut servo(PF_9);
 
-// typedef enum {
-//   WIPERS_OFF,
-//   WIPERS_INT,
-//   WIPERS_HI,
-//   WIPERS_LOW
-// } windshield_state_t;
-
 //=====[Declaration and initialization of public global objects]===============
 
 //=====[Declaration of external public global variables]=======================
@@ -61,14 +54,13 @@ PwmOut servo(PF_9);
 
 //=====[Declaration and initialization of private global variables]============
 
-// windshield_state_t wiperState;
-
 UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
 
 AnalogIn wiperSelect(A0);
 AnalogIn delaySelect(A1);
 
 int target;
+int delayState;
 windshield_state_t wiperState;
 
 //=====[Declarations (prototypes) of private functions]========================
@@ -121,28 +113,28 @@ void wipersReturn() {
 
 //=====[Implementations of private functions]==================================
 
-// void windshieldRun() {
-//   if (!ignitionRead()) {
-//     wiperState = WIPERS_OFF;
-//   }
-//   switch (wiperState) {
+void windshieldRun() {
+  if (!ignitionRead()) {
+    wiperState = WIPERS_OFF;
+  }
+  switch (wiperState) {
 
-//   case WIPERS_HI:
-//     wipersHi();
-//     break;
-//   case WIPERS_LOW:
-//     wipersLow();
-//     break;
-//   case WIPERS_INT:
-//     wipersInt();
-//     break;
-//   default:
-//     case WIPERS_OFF:
-//     wipersOff();
-//     break;
+  case WIPERS_HI:
+    wipersHi();
+    break;
+  case WIPERS_LOW:
+    wipersLow();
+    break;
+  case WIPERS_INT:
+    wipersInt();
+    break;
+  default:
+    case WIPERS_OFF:
+    wipersOff();
+    break;
     
-//   }
-// }
+  }
+}
 
 void selectorUpdate() {
   float num = wiperSelect.read();
@@ -170,22 +162,22 @@ void delaySelectorUpdate() {
 }
 
 void wipersHi() {
-    uartUsb.write("Wiper mode: Hi\n", 16);
+    // uartUsb.write("Wiper mode: Hi\n", 16);
     // wipersRun( HIPERIOD );
 }
 
 void wipersLow() {
-    uartUsb.write("Wiper mode: Intermittent\n", 28);
+    // uartUsb.write("Wiper mode: Intermittent\n", 28);
     // wipersRun( LOWPERIOD );
 }
 
 void wipersInt() {
-    uartUsb.write("Wiper mode: Low\n", 17);
+    // uartUsb.write("Wiper mode: Low\n", 17);
     // wipersRun( INTPERIOD );
 }
 
 void wipersOff() { 
-    uartUsb.write("Wiper mode: Intermittent\n", 28);
+    // uartUsb.write("Wiper mode: Intermittent\n", 28);
     wipersReturn(); 
 }
 
@@ -209,7 +201,9 @@ windshield_state_t getWiperState() {
     return wiperState;
 }
 
-//=====[Main function, the program entry point after power on or reset]========
+int getDelayState() {
+    return delayState;
+}
 
 /*
 If the engine is running, and the user selects HI, LO, INT, or OFF,

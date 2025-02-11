@@ -111,10 +111,10 @@ void statementSelect(ignition_statement_t cmd) {
                 case WIPERS_INT:
                     easyWrite("INT", 7, 1);
                     easyWrite("Delay:", 11, 1);
-                    if (delayState == 1000) {
+                    if (getDelayState() == 1000) {
                         easyWrite("L", 18, 1);
                     }
-                    else if (delayState == 500) {
+                    else if (getDelayState() == 500) {
                         easyWrite("M", 18, 1);
                     }
                     else {
