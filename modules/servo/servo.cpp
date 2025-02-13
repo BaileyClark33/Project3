@@ -16,6 +16,14 @@
 
 //=====[Declaration of private data types]=====================================
 
+typedef enum {
+  SERVO_LEFT_FAST,
+  SERVO_LEFT_SLOW,
+  SERVO_RIGHT_FAST,
+  SERVO_RIGHT_SLOW,
+  SERVO_STOP
+} servo_state_t;
+
 PwmOut servo(PF_9);
 
 //=====[Declaration and initialization of public global objects]===============
