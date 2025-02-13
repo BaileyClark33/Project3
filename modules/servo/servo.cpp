@@ -13,6 +13,9 @@
 #define DUTY_RIGHT_SLOW 0.0775
 #define DUTY_STOP 0.075
 #define PERIOD 0.02
+#define MIN_ANGLE 0.025
+#define MAX_ANGLE 0.125
+#define SLOPE 0.00055555555555
 
 //=====[Declaration of private data types]=====================================
 
@@ -48,22 +51,22 @@ void servoInit() {
 void servoUpdate(servo_state_t state) {
   switch (state) {
   case SERVO_STOP:
-    servo.write(DUTY_STOP);
+    servoMove(servo.read(), 0.01);
     break;
   case SERVO_LEFT_S:
-    servo.write(DUTY_LEFT_SLOW);
+    servoMove(0, 0.1);
     break;
   case SERVO_LEFT_F:
-    servo.write(DUTY_LEFT_MAX);
+    servoMove(0, 0.01);
     break;
   case SERVO_RIGHT_S:
-    servo.write(DUTY_RIGHT_SLOW);
+    servoMove(180, 0.1);
     break;
   case SERVO_RIGHT_F:
-    servo.write(DUTY_RIGHT_MAX);
+    servoMove(180, 0.01);
     break;
   default:
-    servo.write(DUTY_STOP);
+    servoMove(servo.read(), 0.01);
     break;
   }
 }
@@ -71,6 +74,12 @@ void servoUpdate(servo_state_t state) {
 // void setServoState(servo_state_t state) { servoState = state; }
 
 //=====[Implementations of private functions]==================================
+
+servoMove(int angle, int delay) {
+  servo.write(angle * SLOPE + MIN_ANGLE);
+  delay(delay);
+}
+
 
 // servo.write(DUTY_MIN);
 // delay(1000);
