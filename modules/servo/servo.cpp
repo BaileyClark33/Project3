@@ -7,11 +7,6 @@
 
 //=====[Declaration of private defines]========================================
 
-#define DUTY_LEFT_MAX 0.065
-#define DUTY_LEFT_SLOW 0.0725
-#define DUTY_RIGHT_MAX 0.085
-#define DUTY_RIGHT_SLOW 0.0775
-#define DUTY_STOP 0.075
 #define PERIOD 0.02
 #define MIN_ANGLE 0.025
 #define MAX_ANGLE 0.125
