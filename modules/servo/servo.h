@@ -7,18 +7,9 @@
 
 //=====[Declaration of public data types]======================================
 
-typedef enum {
-  SERVO_LEFT_F,
-  SERVO_LEFT_S,
-  SERVO_RIGHT_F,
-  SERVO_RIGHT_S,
-  SERVO_STOP
-} servo_state_t;
-
 //=====[Declarations (prototypes) of public functions]=========================
 
 void servoInit();
-void servoUpdate(servo_state_t state);
 
 //=====[#include guards - end]=================================================
 
