@@ -40,13 +40,6 @@ Intermittent mode is identical to low-speed mode with the
 
 //=====[Declaration of private data types]=====================================
 
-typedef enum {
-  WIPERS_OFF,
-  WIPERS_INT,
-  WIPERS_HI,
-  WIPERS_LOW
-} windshield_state_t;
-
 //=====[Declaration and initialization of public global objects]===============
 
 //=====[Declaration of external public global variables]=======================
