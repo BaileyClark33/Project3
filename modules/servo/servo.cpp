@@ -19,13 +19,13 @@
 
 //=====[Declaration of private data types]=====================================
 
-// typedef enum {
-//   SERVO_LEFT_FAST,
-//   SERVO_LEFT_SLOW,
-//   SERVO_RIGHT_FAST,
-//   SERVO_RIGHT_SLOW,
-//   SERVO_STOP
-// } servo_state_t;
+typedef enum {
+  SERVO_LEFT_F,
+  SERVO_LEFT_S,
+  SERVO_RIGHT_F,
+  SERVO_RIGHT_S,
+  SERVO_STOP
+} servo_state_t;
 
 PwmOut servo(PF_9);
 
