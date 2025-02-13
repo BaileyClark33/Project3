@@ -10,7 +10,7 @@
 #define PERIOD 0.02
 #define MIN_ANGLE 0.025
 #define MAX_ANGLE 0.125
-#define SLOPE \frac{\left(0.125-0.025\right)}{180-0}
+#define SLOPE (MAX_ANGLE - MIN_ANGLE)/(180-0)
 
 //=====[Declaration of private data types]=====================================
 
