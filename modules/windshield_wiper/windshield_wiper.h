@@ -7,7 +7,12 @@
 
 //=====[Declaration of public data types]======================================
 
-
+typedef enum {
+  WIPERS_OFF,
+  WIPERS_INT,
+  WIPERS_HI,
+  WIPERS_LOW
+} windshield_state_t;
 
 //=====[Declarations (prototypes) of public functions]=========================
 
