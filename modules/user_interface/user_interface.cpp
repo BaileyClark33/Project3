@@ -5,6 +5,8 @@
 
 #include "user_interface.h"
 
+#include "ignition.h"
+
 #include "car_system.h"
 #include "alarm.h"
 #include "ignition.h"
@@ -25,10 +27,6 @@
 
 //=====[Declaration and initialization of private global variables]============
 
-DigitalIn driveSeatUsed(D0);
-DigitalIn driveBelt(D1);
-DigitalIn passSeatUsed(D2);
-DigitalIn passBelt(D3);
 
 //=====[Declarations (prototypes) of private functions]========================
 
@@ -37,7 +35,13 @@ static void userInterfaceDisplayUpdate();
 void statementSelect(ignition_statement_t cmd);
 void easyWrite(const char * str, int x = 0, int y = 0);
 
+UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
+
 //=====[Implementations of public functions]===================================
+
+void interfaceWrite(const char * msg, int num) {
+    uartUsb.write(msg, num);
+}
 
 void userInterfaceInit()
 {
@@ -83,16 +87,16 @@ void statementSelect(ignition_statement_t cmd) {
         case FAIL:
             easyWrite("Ignition inhibited");
             easyWrite("Errors", 0, 1);
-            if (driveSeatUsed == OFF) {
+            if (getDriveSeatUsed() == OFF) {
                 easyWrite("DS", 7, 1);
             }
-            if (passSeatUsed == OFF) {
+            if (getPassSeatUsed() == OFF) {
                 easyWrite("PS", 10, 1);
             }
-            if (driveBelt == OFF) {
+            if (getDriveBelt() == OFF) {
                 easyWrite("DSB", 13, 1);
             }
-            if (passBelt == OFF) {
+            if (getPassBelt() == OFF) {
                 easyWrite("PSB", 16, 1);
             }
             break;
@@ -133,7 +137,7 @@ void statementSelect(ignition_statement_t cmd) {
 }
 
 void easyWrite(const char * str, int x, int y) {
-    displayCharPositionWrite (x, y);
+    displayCharPositionWrite(x, y);
     displayStringWrite(str);
     // delay(delay);
 }

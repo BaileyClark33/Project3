@@ -11,6 +11,7 @@
 
 void userInterfaceInit();
 void userInterfaceUpdate();
+void interfaceWrite(const char * msg, int num);
 
 //=====[#include guards - end]=================================================
 

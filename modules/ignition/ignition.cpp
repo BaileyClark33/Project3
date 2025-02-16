@@ -4,6 +4,7 @@
 #include "alarm.h"
 #include "mbed.h"
 #include "arm_book_lib.h"
+#include "user_interface.h"
 
 //=====[Declaration of private defines]========================================
 
@@ -19,16 +20,16 @@
 
 //=====[Declaration and initialization of private global variables]============
 
+DigitalIn ignitionButton(BUTTON1);
+
 DigitalIn driveSeatUsed(D0);
 DigitalIn driveBelt(D1);
 DigitalIn passSeatUsed(D2);
 DigitalIn passBelt(D3);
-DigitalIn ignitionButton(BUTTON1);
 
 DigitalOut engineLed(LED2);
 DigitalOut ignitionLed(LED1);
 
-UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
 
 static bool welcomed = false;
 
@@ -126,34 +127,39 @@ void ignitionFail() {
 
 void welcomeMessage() {
 
-    uartUsb.write("Welcome to enhanced alarm system model 218-W24\n", 47);
+    interfaceWrite("Welcome to enhanced alarm system model 218-W24\n", 47);
 }
 
 void engineStartMessage() {
-    uartUsb.write("Engine Started\n", 16);
+    interfaceWrite("Engine Started\n", 16);
 }
 
 void engineStopMessage() {
-    uartUsb.write("Engine Stopped\n", 16);
+    interfaceWrite("Engine Stopped\n", 16);
 }
 
 void failMessage() {
-    uartUsb.write("Ignition inhibited\n", 20);
+    interfaceWrite("Ignition inhibited\n", 20);
 
     if (driveSeatUsed == OFF) {
-        uartUsb.write("Driver seat unoccupied\n", 24);
+        interfaceWrite("Driver seat unoccupied\n", 24);
     }
     if (passSeatUsed == OFF) {
-        uartUsb.write("Passenger seat unoccupied\n", 27);
+        interfaceWrite("Passenger seat unoccupied\n", 27);
     }
     if (driveBelt == OFF) {
-        uartUsb.write("Driver seatbelt not fastened\n", 30);
+        interfaceWrite("Driver seatbelt not fastened\n", 30);
     }
     if (passBelt == OFF) {
-        uartUsb.write("Passenger seatbelt not fastened\n", 31);
+        interfaceWrite("Passenger seatbelt not fastened\n", 31);
     }
 }
 
 ignition_statement_t getIgnitionState() {
     return writeVal;
 }
+
+bool getDriveSeatUsed() { return driveSeatUsed == ON; }
+bool getDriveBelt() { return driveBelt == ON; }
+bool getPassSeatUsed() { return passSeatUsed == ON; }
+bool getPassBelt() { return passBelt == ON; }

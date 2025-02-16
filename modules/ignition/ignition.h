@@ -3,6 +3,8 @@
 #ifndef _IGNITION_H_
 #define _IGNITION_H_
 
+#include "mbed.h"
+
 //=====[Declaration of public defines]=========================================
 
 //=====[Declaration of public data types]======================================
@@ -20,6 +22,11 @@ void ignitionInit();
 void ignitionUpdate();
 bool ignitionRead();
 ignition_statement_t getIgnitionState();
+
+bool getDriveSeatUsed();
+bool getDriveBelt();
+bool getPassSeatUsed();
+bool getPassBelt();
 
 //=====[#include guards - end]=================================================
 

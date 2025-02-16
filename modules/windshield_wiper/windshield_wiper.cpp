@@ -48,7 +48,7 @@ Intermittent mode is identical to low-speed mode with the
 
 //=====[Declaration and initialization of private global variables]============
 
-UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
+//UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
 
 AnalogIn wiperSelect(A0);
 AnalogIn delaySelect(A1);
@@ -151,7 +151,7 @@ void wipersInt() {
     servoUpdate(SERVO_LEFT_F);
     delay(200);
     servoUpdate(SERVO_RIGHT_F);
-    delay(200)
+    delay(200);
     servoUpdate(SERVO_STOP);
     delay(delayState);
   

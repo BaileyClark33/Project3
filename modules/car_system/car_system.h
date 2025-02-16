@@ -3,6 +3,8 @@
 #ifndef _CAR_SYSTEM_H_
 #define _CAR_SYSTEM_H_
 
+#include "mbed.h"
+
 //=====[Declaration of public defines]=========================================
 
 #define SYSTEM_TIME_INCREMENT_MS   10
