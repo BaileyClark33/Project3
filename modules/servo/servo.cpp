@@ -26,6 +26,8 @@ PwmOut servo(PF_9);
 
 //=====[Declarations (prototypes) of private functions]========================
 
+void servoMove(int angle, int delay);
+
 //=====[Implementations of public functions]===================================
 
 void servoInit() {
