@@ -62,7 +62,7 @@ void servoUpdate(servo_state_t state) {
 
 //=====[Implementations of private functions]==================================
 
-servoMove(int angle, int delay) {
+void servoMove(int angle, int delay) {
   servo.write(angle * SLOPE + MIN_ANGLE);
   delay(delay);
 }
