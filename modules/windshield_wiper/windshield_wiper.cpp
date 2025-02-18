@@ -128,18 +128,14 @@ void delaySelectorUpdate() {
 
 void wipersHi() {
     servoUpdate(SERVO_LEFT_F);
-    delay(200);
     servoUpdate(SERVO_RIGHT_F);
-    delay(200);
     servoUpdate(SERVO_STOP);
     delay(1000);
 }
 
 void wipersLow() {
     servoUpdate(SERVO_LEFT_S);
-    delay(500);
     servoUpdate(SERVO_RIGHT_S);
-    delay(500);
     servoUpdate(SERVO_STOP);
     delay(1000);
 }
@@ -147,9 +143,7 @@ void wipersLow() {
 void wipersInt() {
     delaySelectorUpdate();
     servoUpdate(SERVO_LEFT_F);
-    delay(200);
     servoUpdate(SERVO_RIGHT_F);
-    delay(200);
     servoUpdate(SERVO_STOP);
     delay(delayState);
   
