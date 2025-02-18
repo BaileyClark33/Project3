@@ -22,10 +22,10 @@
 
 DigitalIn ignitionButton(BUTTON1);
 
-DigitalIn driveSeatUsed(D0);
-DigitalIn driveBelt(D1);
-DigitalIn passSeatUsed(D2);
-DigitalIn passBelt(D3);
+DigitalIn driveSeatUsed(D10);
+DigitalIn driveBelt(D11);
+DigitalIn passSeatUsed(D12);
+DigitalIn passBelt(D13);
 
 DigitalOut engineLed(LED2);
 DigitalOut ignitionLed(LED1);
@@ -61,7 +61,7 @@ void ignitionInit() {
 void ignitionUpdate() {
     static int accumulatedDebounceTime = 0;
     if (!welcomed && driveSeatUsed == ON) {
-        // welcomeMessage();
+        welcomeMessage();
         writeVal = INTRO;
         welcomed = true;
     }
@@ -109,19 +109,19 @@ void checkCanIgnite() {
 void engineStart() {
     engineLed = ON;
     ignitionLed = OFF;
-    // engineStartMessage();
+    engineStartMessage();
     writeVal = START;
 }
 
 void engineStop() {
     engineLed = OFF;
-    // engineStopMessage();
+    engineStopMessage();
     writeVal = STOP;
 }
 
 void ignitionFail() {
     alarmEnable();
-    // failMessage();
+    failMessage();
     writeVal = FAIL;
 }
 
