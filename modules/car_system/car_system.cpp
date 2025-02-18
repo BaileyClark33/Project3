@@ -31,8 +31,6 @@ void carSystemInit()
     userInterfaceInit();
     ignitionInit();
     windshieldInit();
-    servoInit();
-    displayInit();
     alarmInit();
 }
 
