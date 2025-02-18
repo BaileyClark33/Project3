@@ -73,7 +73,7 @@ void windshieldInit() {
   servoInit();
 }
 
-void windshieldUpdate() { // ingitionRun calls this
+void windshieldUpdate() { 
   selectorUpdate();
   delaySelectorUpdate();
   windshieldRun();
@@ -82,9 +82,7 @@ void windshieldUpdate() { // ingitionRun calls this
 //=====[Implementations of private functions]==================================
 
 void windshieldRun() {
-  if (!ignitionRead()) {
-    wipersOff();
-  }
+  if (ignitionRead()) {
   switch (wiperState) {
 
   case WIPERS_HI:
@@ -100,7 +98,7 @@ void windshieldRun() {
     case WIPERS_OFF:
     wipersOff();
     break;
-    
+  }
   }
 }
 
@@ -159,8 +157,9 @@ void wipersInt() {
 
 void wipersOff() { 
     servoUpdate(SERVO_RIGHT_F);
-    delay(200);
+    if (getServoAngle() < 2) {
     servoUpdate(SERVO_STOP);
+    }
 }
 
 

@@ -19,6 +19,7 @@ typedef enum {
 
 void servoInit();
 void servoUpdate(servo_state_t state);
+float getServoAngle();
 
 //=====[#include guards - end]=================================================
 

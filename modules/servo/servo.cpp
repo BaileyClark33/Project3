@@ -26,7 +26,7 @@ PwmOut servo(PF_9);
 
 //=====[Declarations (prototypes) of private functions]========================
 
-void servoMove(int angle, int delay);
+void servoMove(float angle, float delay);
 
 //=====[Implementations of public functions]===================================
 
@@ -64,9 +64,13 @@ void servoUpdate(servo_state_t state) {
 
 //=====[Implementations of private functions]==================================
 
-void servoMove(int angle, int delay) {
+void servoMove(float angle, float delay) {
   servo.write(angle * SLOPE + MIN_ANGLE);
   delay(delay);
+}
+
+float getServoAngle() {
+    return servo.read();
 }
 
 

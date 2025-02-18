@@ -67,7 +67,7 @@ void ignitionUpdate() {
     }
 
 
-    interfaceWrite("sigma", 7);
+    interfaceWrite("sigma", 5);
     checkCanIgnite();
 
     if (ignitionButton == ON) {
