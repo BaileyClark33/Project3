@@ -66,12 +66,14 @@ void ignitionUpdate() {
         welcomed = true;
     }
 
+
+    interfaceWrite("sigma", 7);
     checkCanIgnite();
 
     if (ignitionButton == ON) {
         accumulatedDebounceTime += updateTime_ms;
-        }
-    if (accumulatedDebounceTime >= DEBOUNCE_BUTTON_TIME_MS && ignitionButton == OFF) {
+    }
+    if (accumulatedDebounceTime >= DEBOUNCE_BUTTON_TIME_MS && ignitionButton == ON) {
         accumulatedDebounceTime = 0;
         if (alarmRead()) {
             alarmDisable();

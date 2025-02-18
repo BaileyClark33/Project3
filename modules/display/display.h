@@ -12,7 +12,7 @@
 
 //=====[Declarations (prototypes) of public functions]=========================
 
-void displayInit( void );
+void displayInit();
  
 void displayCharPositionWrite( uint8_t charPositionX, uint8_t charPositionY );
 
