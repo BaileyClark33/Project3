@@ -156,10 +156,7 @@ void wipersInt() {
 }
 
 void wipersOff() { 
-    servoUpdate(SERVO_RIGHT_F);
-    if (getServoAngle() < 2) {
-    servoUpdate(SERVO_STOP);
-    }
+    servoReturn();
 }
 
 

@@ -32,9 +32,7 @@ void servoMove(float angle, float delay);
 
 void servoInit() {
   servo.period(PERIOD);
-  servoUpdate(SERVO_RIGHT_F);
-  delay(200);
-  servoUpdate(SERVO_STOP);
+  servoReturn();
 }
 
 void servoUpdate(servo_state_t state) {
@@ -43,16 +41,16 @@ void servoUpdate(servo_state_t state) {
     servoMove(servo.read(), 0.01);
     break;
   case SERVO_LEFT_S:
-    servoMove(0, 0.1);
+    servoMove(0.0, 0.1);
     break;
   case SERVO_LEFT_F:
-    servoMove(0, 0.01);
+    servoMove(0.0, 0.01);
     break;
   case SERVO_RIGHT_S:
-    servoMove(180, 0.1);
+    servoMove(180.0, 0.1);
     break;
   case SERVO_RIGHT_F:
-    servoMove(180, 0.01);
+    servoMove(180.0, 0.01);
     break;
   default:
     servoMove(servo.read(), 0.01);
@@ -69,14 +67,14 @@ void servoMove(float angle, float delay) {
   delay(delay);
 }
 
+void servoReturn() {
+    if (servo.read() < 2) {
+    servoUpdate(SERVO_STOP);
+    } else {
+        servoUpdate(SERVO_RIGHT_F);
+    }
+}
+
 float getServoAngle() {
     return servo.read();
 }
-
-
-// servo.write(DUTY_MIN);
-// delay(1000);
-// servo.write(DUTY_STOP);
-// delay(1000);
-// servo.write(DUTY_MAX);
-// delay(1000);
