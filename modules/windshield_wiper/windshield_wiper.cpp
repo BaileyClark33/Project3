@@ -130,14 +130,12 @@ void wipersHi() {
     servoUpdate(SERVO_LEFT_F);
     servoUpdate(SERVO_RIGHT_F);
     servoUpdate(SERVO_STOP);
-    delay(1000);
 }
 
 void wipersLow() {
     servoUpdate(SERVO_LEFT_S);
     servoUpdate(SERVO_RIGHT_S);
     servoUpdate(SERVO_STOP);
-    delay(1000);
 }
 
 void wipersInt() {
