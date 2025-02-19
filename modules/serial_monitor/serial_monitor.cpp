@@ -28,12 +28,12 @@ UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
 //=====[Implementations of public functions]===================================
 
 void serialMonitorUpdate() {
-    statementSelect(getIgnitionState());
+    uartCommands(getIgnitionState());
 }
 
 //=====[Implementations of private functions]==================================
 
-void statementSelect(ignition_statement_t cmd) {
+void uartCommands(ignition_statement_t cmd) {
     switch(cmd) {
         case INTRO:
             uartUsb.write("Welcome to enhanced alarm system model 218-W24\n", 47);

@@ -61,7 +61,6 @@ void ignitionInit() {
 void ignitionUpdate() {
     static int accumulatedDebounceTime = 0;
     if (!welcomed && driveSeatUsed == ON) {
-        welcomeMessage();
         writeVal = INTRO;
         welcomed = true;
     }

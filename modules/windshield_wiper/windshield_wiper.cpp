@@ -126,6 +126,9 @@ void delaySelectorUpdate() {
   }
 }
 
+void wipersMove() {
+    //make this a function that can be used interchangeably instead of writing servoupdate 3 times everytime
+}
 void wipersHi() {
     servoUpdate(SERVO_LEFT_F);
     servoUpdate(SERVO_RIGHT_F);

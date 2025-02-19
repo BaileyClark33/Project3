@@ -9,6 +9,7 @@
 #include "user_interface.h"
 #include "servo.h"
 #include "alarm.h"
+#include "serial_monitor.h"
 
 //=====[Declaration of private defines]========================================
 
@@ -39,6 +40,7 @@ void carSystemUpdate()
     ignitionUpdate();
     windshieldUpdate();
     userInterfaceUpdate();
+    serialMonitorUpdate();
     delay(SYSTEM_TIME_INCREMENT_MS);
 }
 

@@ -1,3 +1,8 @@
+//change servo so that slow has a slower slope
+//fast needs higher slope
+//both use the same delay between periods
+//intermittent uses low mode but delay between cycles changes
+
 //=====[Libraries]=============================================================
 
 #include "arm_book_lib.h"
@@ -38,7 +43,7 @@ void servoInit() {
 void servoUpdate(servo_state_t state) {
   switch (state) {
   case SERVO_STOP:
-    servoMove(servo.read(), 0.01);
+    servoMove(0.0, 0.01);
     break;
   case SERVO_LEFT_S:
     servoMove(0.0, 0.1);
@@ -47,34 +52,23 @@ void servoUpdate(servo_state_t state) {
     servoMove(0.0, 0.01);
     break;
   case SERVO_RIGHT_S:
-    servoMove(180.0, 0.1);
+    servoMove(67.0, 0.1);
     break;
   case SERVO_RIGHT_F:
-    servoMove(180.0, 0.01);
+    servoMove(67.0, 0.01);
     break;
   default:
-    servoMove(servo.read(), 0.01);
+    servoMove(0.0, 0.01);
     break;
   }
 }
-
-// void setServoState(servo_state_t state) { servoState = state; }
 
 //=====[Implementations of private functions]==================================
 
 void servoMove(float angle, float delay) {
   servo.write(angle * SLOPE + MIN_ANGLE);
-  delay(delay);
 }
 
 void servoReturn() {
-    if (servo.read() < 2) {
     servoUpdate(SERVO_STOP);
-    } else {
-        servoUpdate(SERVO_RIGHT_F);
-    }
-}
-
-float getServoAngle() {
-    return servo.read();
 }
