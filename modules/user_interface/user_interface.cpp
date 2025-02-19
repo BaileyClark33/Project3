@@ -35,13 +35,7 @@ static void userInterfaceDisplayUpdate();
 void statementSelect(ignition_statement_t cmd);
 void easyWrite(const char * str, int x = 0, int y = 0);
 
-UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
-
 //=====[Implementations of public functions]===================================
-
-void interfaceWrite(const char * msg, int num) {
-    uartUsb.write(msg, num);
-}
 
 void userInterfaceInit()
 {

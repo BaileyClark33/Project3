@@ -1,7 +1,10 @@
 //=====[#include guards - begin]===============================================
 
-#ifndef _USER_INTERFACE_H_
-#define _USER_INTERFACE_H_
+#ifndef _SERIAL_MONITOR_H_
+#define _SERIAL_MONITOR_H_
+
+#include "mbed.h"
+
 
 //=====[Declaration of public defines]=========================================
 
@@ -9,9 +12,8 @@
 
 //=====[Declarations (prototypes) of public functions]=========================
 
-void userInterfaceInit();
-void userInterfaceUpdate();
+void serialMonitorUpdate();
 
 //=====[#include guards - end]=================================================
 
-#endif // _USER_INTERFACE_H_
+#endif //_SERIAL_MONITOR_H_
