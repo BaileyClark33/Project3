@@ -6,7 +6,6 @@ The system we built is a driver's education car that implements a windshield wip
 
 We are using positional motors for the windshield wipers since the motor movements require accuracy of the angle while speed can be control by using a step time. The accuracy of 67 degrees is hard to accomplish with a continous servo because of mechanical error that it has.
 
-*Extra credit (+3 points) if a correct modular diagram of the code (similar to Figure 5.3 in textbook) is linked or included in the readme file. 
 
 ## Project Behavior Table
 
@@ -17,7 +16,7 @@ We are using positional motors for the windshield wipers since the motor movemen
 | Engine Starts message and blue LED turns on when saftey measures are met and ignition button is pressed      | pass|                                                                      
 | If the green LED is off and ignition button is pressed ignition is inhibited. Sound the alarm buzzer and display the message, “Ignition inhibited” and why the ignition was inhibited | pass |
 | Stop the engine when the ignition button is pushed and released when running                 | pass |
-| The speed of the wipers are correct based on the user select | ? |
-| In intermittent mode, the delay selected is correctly implemented | ? |
+| The speed of the wipers are correct based on the user select | pass |
+| In intermittent mode, the delay selected is correctly implemented | pass |
 | LCD display shows the Wipers mode, and the delay if it is in intermittent mode| pass|
-| When the wipers are turned off, the wipers complete the cycle before stopping | ?|
+| When the wipers are turned off, the wipers complete the cycle before stopping | pass |
