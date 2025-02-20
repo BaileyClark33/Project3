@@ -20,12 +20,12 @@ We decided to use a positional motor for our windshield wipers. We decided to us
 
 |Specification                                                                            |        Test Result          |         Comment
 |------------------|-----------------------------|----------------------
-| When the driver sits down, display the message, “Welcome to enhanced alarm system model 218-W25”|         pass    |        
-| Start the engine when the ignition is enabled and ignition button is pushed                     |         pass  |      
-| If the ignition is lit, normal ignition occurs, the blue LED turns on and the green LED off . Display the message, “Engine started.”    | pass|                                                                      
-| If the ignition is not enabled then ignition is inhibited. Sound the alarm buzzer and display the message, “Ignition inhibited” and why the ignition was inhibited | pass |
+| Welcome message is displeyed when the driver sits down|         pass    |        
+| Green LED turns on when all saftey measures are met                    |         pass  |      
+| Engine Starts message and blue LED turns on when saftey measures are met and ignition button is pressed      | pass|                                                                      
+| If the green LED is off and ignition button is pressed ignition is inhibited. Sound the alarm buzzer and display the message, “Ignition inhibited” and why the ignition was inhibited | pass |
 | Stop the engine when the ignition button is pushed and released when running                 | pass |
-| Wipers move at the speed the user selected if the engine is running | ? |
-| Wipers move with the delay selected | ? |
-| The speed and delay of the wipers is displayed on the LCD| pass|
-| When wiper mode is selected to off the wiper goes back to 0 degrees, completing its cycle if in one | ?|
+| The speed of the wipers are correct based on the user select | ? |
+| In intermittent mode, the delay selected is correctly implemented | ? |
+| LCD display shows the Wipers mode, and the delay if it is in intermittent mode| pass|
+| When the wipers are turned off, the wipers complete the cycle before stopping | ?|
