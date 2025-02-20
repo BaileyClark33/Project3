@@ -6,6 +6,8 @@ The system we built is a driver's education car that implements a windshield wip
 
 We are using positional motors for the windshield wipers since the motor movements require accuracy of the angle while speed can be control by using a step time. The accuracy of 67 degrees is hard to accomplish with a continous servo because of mechanical error that it has.
 
+Here is a diagram of the relationships between the modules used in our Car System.
+![IMG_3904](https://github.com/user-attachments/assets/924d9dae-46f4-4e3d-9f65-ad2a5bad2251)
 
 ## Project Behavior Table
 
