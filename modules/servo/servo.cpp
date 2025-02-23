@@ -29,46 +29,40 @@ PwmOut servo(PF_9);
 
 //=====[Declaration and initialization of private global variables]============
 
+float angleS = 0;
+
 //=====[Declarations (prototypes) of private functions]========================
 
-void servoMove(float angle, float delay);
+void servoMove(float angle);
 
 //=====[Implementations of public functions]===================================
 
 void servoInit() {
   servo.period(PERIOD);
-  servoReturn();
+  servoUpdate(SERVO_STOP);
 }
 
 void servoUpdate(servo_state_t state) {
   switch (state) {
   case SERVO_STOP:
-    servoMove(0.0, 0.01);
+    servoMove(0.0);
     break;
-  case SERVO_LEFT_S:
-    servoMove(0.0, 0.1);
+  case SERVO_LEFT:
+    servoMove(0.0);
     break;
-  case SERVO_LEFT_F:
-    servoMove(0.0, 0.01);
-    break;
-  case SERVO_RIGHT_S:
-    servoMove(67.0, 0.1);
-    break;
-  case SERVO_RIGHT_F:
-    servoMove(67.0, 0.01);
+  case SERVO_RIGHT:
+    servoMove(67.0);
     break;
   default:
-    servoMove(0.0, 0.01);
+    servoMove(0.0);
     break;
   }
 }
 
 //=====[Implementations of private functions]==================================
 
-void servoMove(float angle, float delay) {
+void servoMove(float angle) {
   servo.write(angle * SLOPE + MIN_ANGLE);
+  angleS = angle;
 }
 
-void servoReturn() {
-    servoUpdate(SERVO_STOP);
-}
