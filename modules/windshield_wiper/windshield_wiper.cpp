@@ -36,9 +36,13 @@ Intermittent mode is identical to low-speed mode with the
 #define DUTY_MAX 0.85
 #define DUTY_STOP 0.065
 #define PERIOD 0.02 // Units of period is seconds
-#define STOP 0.075
+#define HIGH_PERIOD 0.04
+#define LOW_PERIOD 0.02
+#define INT_PERIOD 0.02
 
 //=====[Declaration of private data types]=====================================
+
+PwmOut servo(PF_9);
 
 //=====[Declaration and initialization of public global objects]===============
 
@@ -48,13 +52,14 @@ Intermittent mode is identical to low-speed mode with the
 
 //=====[Declaration and initialization of private global variables]============
 
-//UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
+UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
 
 AnalogIn wiperSelect(A0);
 AnalogIn delaySelect(A1);
 
 int delayState;
 windshield_state_t wiperState;
+int wiperUpdateCounter = 0;
 
 //=====[Declarations (prototypes) of private functions]========================
 
@@ -70,10 +75,11 @@ void wipersOff();
 //=====[Implementations of public functions]===================================
 
 void windshieldInit() {
-  servoInit();
+  servo.period(PERIOD);
+  servo.write(DUTY_MIN); // start at 0
 }
 
-void windshieldUpdate() { 
+void windshieldUpdate() { // ingitionRun calls this
   selectorUpdate();
   delaySelectorUpdate();
   windshieldRun();
@@ -82,7 +88,9 @@ void windshieldUpdate() {
 //=====[Implementations of private functions]==================================
 
 void windshieldRun() {
-  if (ignitionRead()) {
+  if (!ignitionRead()) {
+    wipersOff();
+  }
   switch (wiperState) {
 
   case WIPERS_HI:
@@ -99,7 +107,7 @@ void windshieldRun() {
     wipersOff();
     break;
   }
-  }
+
 }
 
 void selectorUpdate() {
@@ -117,44 +125,93 @@ void selectorUpdate() {
 
 void delaySelectorUpdate() {
   float num = delaySelect.read();
+
   if (num >= .06) {
-    delayState = 1000;
+    delayState = 8000;
   } else if (num > .03 && num <= .06) {
-    delayState = 500;
+    delayState = 6000;
   } else {
-    delayState = 250;
+    delayState = 3000;
   }
 }
 
-void wipersMove() {
-    //make this a function that can be used interchangeably instead of writing servoupdate 3 times everytime
-}
 void wipersHi() {
-    servoUpdate(SERVO_LEFT_F);
-    servoUpdate(SERVO_RIGHT_F);
+    wiperUpdateCounter++;
+    if (wiperUpdateCounter == 0) {
+         servoUpdate(SERVO_RIGHT);
+    }
+    else if (wiperUpdateCounter == 28) {
+    servoUpdate(SERVO_LEFT);
+    }
+    else if (wiperUpdateCounter == 56) {
     servoUpdate(SERVO_STOP);
+    }
+    else if (wiperUpdateCounter == 300) {
+        wiperUpdateCounter = 0;
+    }
 }
 
 void wipersLow() {
-    servoUpdate(SERVO_LEFT_S);
-    servoUpdate(SERVO_RIGHT_S);
-    servoUpdate(SERVO_STOP);
+    wiperUpdateCounter++;
+    if (wiperUpdateCounter == 0) {
+         servoUpdate(SERVO_RIGHT);
+    }
+    else if (wiperUpdateCounter == 37) {
+    servoUpdate(SERVO_LEFT);
+    }
+    else if (wiperUpdateCounter == 74) {
+        servoUpdate(SERVO_STOP);
+    }
+    else if (wiperUpdateCounter == 300) {
+        wiperUpdateCounter = 0;
+    }
 }
 
 void wipersInt() {
-    delaySelectorUpdate();
-    servoUpdate(SERVO_LEFT_F);
-    servoUpdate(SERVO_RIGHT_F);
-    servoUpdate(SERVO_STOP);
-    delay(delayState);
-  
+    wiperUpdateCounter++;
+    switch (delayState) {
+        case 3000:
+        wipersLow();
+        break;
+        case 6000:
+        if (wiperUpdateCounter == 0) {
+            servoUpdate(SERVO_RIGHT);
+        }
+        else if (wiperUpdateCounter == 37) {
+        servoUpdate(SERVO_LEFT);
+        }
+        else if (wiperUpdateCounter == 74) {
+            servoUpdate(SERVO_STOP);
+        }
+        else if (wiperUpdateCounter == 600) {
+            wiperUpdateCounter = 0;
+        }
+        break;
+        case 8000:
+        if (wiperUpdateCounter == 0) {
+            servoUpdate(SERVO_RIGHT);
+        }
+        else if (wiperUpdateCounter == 37) {
+        servoUpdate(SERVO_LEFT);
+        }
+        else if (wiperUpdateCounter == 74) {
+            servoUpdate(SERVO_STOP);
+        }
+        else if (wiperUpdateCounter == 800) {
+            wiperUpdateCounter = 0;
+        }
+        break;
+        default:
+        break;
+    }
 }
 
 void wipersOff() { 
-    servoReturn();
+    wiperUpdateCounter++;
+    if (wiperUpdateCounter == 40) {
+        servoUpdate(SERVO_STOP);
+    }
 }
-
-
 
 windshield_state_t getWiperState() {
     return wiperState;
@@ -163,18 +220,3 @@ windshield_state_t getWiperState() {
 int getDelayState() {
     return delayState;
 }
-
-/*
-If the engine is running, and the user selects HI, LO, INT, or OFF,
-run the wipers in the appropriate mode, with the typical parameter values,
-as described above. Read the desired delay time for INT mode from the
-intermittent delay time selector. Do not run the wipers if the engine
-is not running.
-display the selected mode, including the delay time selection
-(SHORT, MEDIUM, or LONG) for intermittent mode.
-If the wiper mode selector is turned to OFF, or the engine is turned off, then
-if the wiper is moving, in any mode, complete the current cycle and
- return the wipers to 0 degrees;
-if the wiper is hesitating in INT mode, remain stationary.
-
-*/
