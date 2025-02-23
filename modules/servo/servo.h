@@ -8,10 +8,8 @@
 //=====[Declaration of public data types]======================================
 
 typedef enum {
-  SERVO_LEFT_F,
-  SERVO_LEFT_S,
-  SERVO_RIGHT_F,
-  SERVO_RIGHT_S,
+  SERVO_LEFT,
+  SERVO_RIGHT,
   SERVO_STOP
 } servo_state_t;
 
@@ -19,8 +17,6 @@ typedef enum {
 
 void servoInit();
 void servoUpdate(servo_state_t state);
-float getServoAngle();
-void servoReturn();
 
 //=====[#include guards - end]=================================================
 
